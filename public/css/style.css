@@ -1,0 +1,128 @@
+/* -------------------------------- */
+/* ESTILOS BASICOS */
+/* -------------------------------- */
+body{
+	margin: 0;
+	font-family: Arial;
+}
+
+
+
+/* -------------------------------- */
+/* ESTILOS HEADER - MAIN-NAV */
+/* -------------------------------- */
+.navegacion .main-nav{
+	background: #2f383d;
+	color: #9cb2c0;
+	height: 80px;
+}
+.main-nav .logo{
+	display: inline-block;
+}
+.main-nav .menu{
+	float: right;
+	margin: 20px 20px 0 0;
+}
+
+/* -------------------------------- */
+/* ESTILOS HEADER - MENU */
+/* -------------------------------- */
+.menu ul{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.menu ul li{
+	display: inline-block;
+}
+.menu ul li a{
+	color: #9cb2c0;
+	text-decoration: none;
+	padding: 10px 30px 10px 20px;
+	display: block;
+	font-size: 14px;
+}
+.menu ul li a.dropdown{
+}
+.menu ul li a:hover{
+	background-color: grey;
+}
+.main-nav .logo{
+	margin: 10px 0 0 20px;
+}
+
+
+/* -------------------------------- */
+/* ESTILOS BARRITA - MENUBARRITA */
+/* -------------------------------- */
+
+.barrita .menubarrita{
+
+		display: inline-block;
+		
+}
+
+.menubarrita ul{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.menubarrita ul li{
+	display: inline-block;
+}
+.menubarrita ul li a{
+	color: #9cb2c0;
+	text-decoration: none;
+	padding: 10px 30px 10px 20px;
+	display: block;
+	font-size: 14px;
+}
+.menubarrita ul li a.dropdown{
+	background-repeat: no-repeat;
+	background-position: 90% 50%;
+}
+.menubarrita ul li a:hover{
+	background-color: grey;
+}
+
+
+
+/* -------------------------------- */
+/* ESTILOS GENERAL - MENUBARRITA */
+/* -------------------------------- */
+
+
+
+
+
+
+.general{
+		background-color: white;
+		display: inline-block;
+}
+
+.general .helpcontact{
+	color: #9cb2c0;
+	font-size: 12px;
+	line-height: 16px;
+	float: left;
+	margin-left: 150px;
+}
+.general .support{
+	color: #9cb2c0;
+	font-size: 12px;
+	line-height: 16px;
+	padding: 15px;
+	float: left;
+	margin-left: 200px;
+
+}
+.general .contact{
+	margin-left: 150px;
+	color: #9cb2c0;
+	font-size: 12px;
+	line-height: 16px;
+	padding: 15px;
+	float: left;
+
+}

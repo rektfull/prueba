@@ -1,0 +1,426 @@
+
+<div id="andres" style="display: block; min-height: 600px">
+    
+</div>
+
+
+
+<script type="text/javascript">
+(function() {
+Ext.require([
+    'Ext.window.Window',
+    'Ext.panel.Panel',
+    'Ext.toolbar.*',
+    'Ext.tree.Panel',
+    'Ext.container.Viewport',
+    'Ext.container.ButtonGroup',
+    'Ext.form.*',
+    'Ext.tab.*',
+    'Ext.slider.*',
+    'Ext.layout.*',
+    'Ext.button.*',
+    'Ext.grid.*',
+    'Ext.data.*',
+    'Ext.util.*',
+
+    'Ext.perf.Monitor'
+]);
+
+function hasOption (name) {
+    return window.location.search.indexOf(name) >= 0;
+}
+
+var isTouchTheme;
+
+if (hasOption('diag')) {
+    Ext.require([
+        'Ext.diag.layout.ContextItem',
+        'Ext.diag.layout.Context'
+    ]);
+}
+
+
+
+function getFormWidgets () {
+    return applySizing('formWidgets', {
+        xtype: 'form',
+        id   : 'form-widgets',
+        title: 'Form Widgets',
+        frame: true,
+
+        tools: [
+            {type:'close'},
+            {type:'minimize'},
+            {type:'maximize'},
+            {type:'restore'},
+            {type:'gear'},
+            {type:'pin'},
+            {type:'unpin'},
+            {type:'right'},
+            {type:'left'},
+            {type:'down'},
+            {type:'refresh'},
+            {type:'minus'},
+            {type:'plus'},
+            {type:'help'},
+            {type:'search'},
+            {type:'save'},
+            {type:'print'}
+        ],
+
+        bodyPadding: '10 20',
+
+        defaults: {
+            anchor    : '98%',
+            msgTarget : 'side',
+            allowBlank: false
+        },
+
+        items: [
+            {
+                xtype: 'label',
+                text : ''
+            },
+            {
+                fieldLabel: 'Nombre',
+                xtype     : 'textfield',
+                name      : 'someField',
+            },
+            {
+                fieldLabel: 'NIT',
+                xtype     : 'textfield',
+                name      : 'somefield'
+            },
+            {
+                fieldLabel: 'Direccion',
+                xtype     : 'textfield',
+                name      : 'somefield',
+                emptyText : 'Direccion'
+            },
+            {
+                fieldLabel: 'correo electronico',
+                name: 'time',
+                xtype: 'textfield'
+            },
+            {
+                fieldLabel: 'Telefono 1',
+                xtype     : 'textfield',
+                name      : 'somfield',
+            },
+            {
+                fieldLabel: 'Telefono 2',
+                xtype     : 'textfield',
+                name      : 'somefield',
+            },
+            {
+                fieldLabel: 'Fax',
+                xtype     : 'textfield',
+                name      : 'somofield',
+            },
+            {
+                fieldLabel: 'Celular',
+                xtype     : 'textfield',
+                name      : 'somefield',
+            },
+            {
+                fieldLabel: 'Servicios',
+                xtype: 'combo',
+                store: ['General', 'Ninguna']
+            },
+              {
+                fieldLabel: 'Vendedor',
+                xtype: 'combo',
+                store: ['Ninguno',]
+            },
+              {
+                fieldLabel: 'Terminos de pago',
+                xtype: 'combo',
+                store: ['Vencimiento Manual', 'De contado', '8 dias', '15 dias', '30 dias','60 dias']
+            },
+        
+            {
+                fieldLabel: 'Cliente',
+                xtype: 'checkbox',
+                columns: [100,100],
+               
+            },
+            {
+                fieldLabel: 'Proveedor',
+                xtype: 'checkbox',
+                columns: [100,100],
+            },
+            
+            {
+                fieldLabel: 'Observaciones',
+                xtype     : 'textareafield',
+                name      : 'message',
+                cls       : 'x-form-valid',
+                value     : ''
+            },
+            {
+                fieldLabel: 'Incluir estado de cuenta',
+                xtype: 'checkbox',
+                columns: [100,100],
+            },
+           
+            
+        ],
+
+        buttons: [
+            {
+                text   :'Toggle Enabled',
+                handler: function() {
+                    this.up('form').items.each(function(item) {
+                        item.setDisabled(!item.disabled);
+                    });
+                }
+            },
+            {
+                text   : 'Reset Form',
+                handler: function() {
+                    Ext.getCmp('form-widgets').getForm().reset();
+                }
+            },
+            {
+                text   : 'Validate',
+                handler: function() {
+                    Ext.getCmp('form-widgets').getForm().isValid();
+                }
+            }
+        ]
+    });
+}//Final del form *//
+
+
+var sizing = {
+    mainContainer: {
+        classic: [1130, 1460],
+        neptune: [1250, 1600],
+        'neptune-touch': [790, 4140]
+    },
+    basicPanel: {
+        classic: [150, 90, 20, 20],
+        neptune: [150, 130, 20, 20],
+        'neptune-touch': [250, 150, 0, 0]
+    },
+    collapsedPanel: {
+        classic: [150, 70, 20, 120],
+        neptune: [150, 120, 20, 160],
+        'neptune-touch': [250, 150, 0, 170]
+    },
+    maskedPanel: {
+        classic: [130, 170, 180, 20],
+        neptune: [130, 260, 180, 20],
+        'neptune-touch': [230, 320, 270, 0]
+    },
+    framedPanel: {
+        classic: [170, 100, 320, 20],
+        neptune: [200, 150, 320, 20],
+        'neptune-touch': [270, 150, 520, 0]
+    },
+    collapsedFramedPanel: {
+        classic: [170, 60, 320, 130],
+        neptune: [200, 100, 320, 180],
+        'neptune-touch': [270, 150, 520, 170]
+    },
+    basicWindow: {
+        classic: [150, 170, 500, 20, {
+            minWidth: 150,
+            minHeight: 150,
+            maxHeight: 170
+        }],
+        neptune: [150, 260, 530, 20, {
+            minWidth: 150,
+            minHeight: 200,
+            maxHeight: 260
+        }],
+        'neptune-touch': [250, 260, 0, 340, {
+            minWidth: 150,
+            minHeight: 200,
+            maxHeight: 260
+        }]
+    },
+    panelWithToolbars: {
+        classic: [450, 170, 660, 20],
+        neptune: [500, 260, 690, 20],
+        'neptune-touch': [520, 260, 270, 340]
+    },
+    formWidgets: {
+        classic: [630, 750, 20, 200],
+        neptune: [660, 750, 20, 290],
+        triton: [660, 1000, 20, 290],
+        'neptune-touch': [790, 940, 0, 620]
+    },
+    borderLayout: {
+        classic: [450, 350, 660, 200],
+        neptune: [500, 350, 690, 290],
+        'neptune-touch': [790, 500, 0, 1580]
+    },
+    grid: {
+        classic: [450, 200, 660, 560],
+        neptune: [500, 200, 690, 650],
+        triton: [500, 300, 690, 650],
+        'neptune-touch': [790, 400, 0, 2100]
+    },
+    accordion: {
+        classic: [450, 240, 660, 770],
+        neptune: [500, 240, 690, 860],
+        triton: [500, 340, 690, 960],
+        'neptune-touch': [790, 340, 0, 2520]
+    },
+    scrollingTabs: {
+        classic: [310, 150, 20, 960],
+        neptune: [325, 150, 20, 1050],
+        triton: [325, 150, 20, 1300],
+        'neptune-touch': [420, 200, 0, 2880]
+    },
+    plainTabs: {
+        classic: [310, 150, 340, 960],
+        neptune: [325, 150, 355, 1050],
+        triton: [325, 150, 355, 1300],
+        'neptune-touch': [350, 200, 440, 2880]
+    },
+    datePicker: {
+        classic: [180, undefined, 20, 1120],
+        neptune: [212, undefined, 20, 1210],
+        triton: [310, undefined, 20, 1460],
+        'neptune-touch': [282, undefined, 0, 3780]
+    },
+    progressBar: {
+        classic: [450, 200, 660, 1020],
+        neptune: [500, 200, 690, 1110],
+        triton: [500, 220, 690, 1310],
+        'neptune-touch': [790, 340, 0, 3100]
+    },
+    framedGrid: {
+        classic: [450, 180, 660, 1230],
+        neptune: [500, 180, 690, 1320],
+        triton: [500, 280, 690, 1540],
+        'neptune-touch': [790, 300, 0, 3460]
+    },
+    resizer: {
+        classic: [440, 220, 210, 1120],
+        neptune: [440, 220, 240, 1210],
+        triton: [340, 220, 340, 1460],
+        'neptune-touch': [488, 314, 302, 3780]
+    }
+};
+
+var theme;
+function getSizing(id) {
+    var theme = Ext.themeName,
+        info;
+
+    if (theme == 'gray') {
+        // same dimensions
+        theme = 'classic';
+    }
+
+    info = sizing[id][theme];
+    if (!info && theme === 'crisp') {
+        // default to neptune for crisp
+        info = sizing[id]['neptune'];
+    }
+    if (!info && theme === 'triton') {
+        // default to neptune for triton
+        info = sizing[id]['neptune'];
+    }
+    if (!info && theme === 'crisp-touch') {
+        // default to neptune-touch for crisp
+        info = sizing[id]['neptune-touch'];
+    }
+
+    return info;
+}
+
+function applySizing(id, config) {
+
+    var info = getSizing(id),
+        keys = ['width', 'height', 'x', 'y'],
+        len = keys.length,
+        i = 0,
+        val;
+
+    if (info) {
+        for (; i < len; ++i) {
+            val = info[i];
+            if (val !== undefined) {
+                config[keys[i]] = val;
+            }
+        }
+
+        // Any other config options
+        Ext.applyIf(config, info[len]);
+    }
+
+    return config;
+}
+
+function doThemes () {
+    var time = Ext.perf.getTimestamp(),
+        maskedPanel;
+
+    var items = [
+          
+          getFormWidgets(),
+
+          0// end of list (makes commenting out any of the above easy,
+    ];
+    items.pop(); // remove the 0 on the end
+
+    mainContainer = Ext.create('Ext.container.Container', applySizing('mainContainer', {
+        id: 'main-container',
+        renderTo: "andres",
+        layout: 'absolute',
+        items: items
+    }));
+
+    //addFormWindow();
+
+    setTimeout(function() {
+        // we may comment out the creation of this for testing
+        if (maskedPanel) {
+            maskedPanel.setLoading({
+                msg: 'Loading...',
+                useTargetEl: true
+            });
+        }
+
+        if (!hasOption('notips')) {
+            Ext.QuickTips.init();
+        }
+    }, 2000);
+
+    time = Ext.perf.getTimestamp() - time;
+    Ext.log('total time: ' + Math.round(time));
+}
+
+Ext.onReady(function() {
+    isTouchTheme = Ext.themeName === 'neptune-touch' || Ext.themeName === 'crisp-touch';
+    if (!hasOption('perf')) {
+        if (hasOption('delay')) {
+            setTimeout(doThemes, 1000);
+        } else {
+            doThemes();
+        }
+    } else {
+        setTimeout(function () {
+            var a = document.createElement('a');
+            a.innerHTML = 'Page Analyzer';
+            a.style.position = "absolute";
+            a.style.left = "5px";
+            a.style.top = "5px";
+            a.href = 'javascript:void(window.open("../page-analyzer/page-analyzer.html","pageAn"))';
+            document.body.appendChild(a);
+
+            Ext.Perf.setup();
+            Ext.Perf.monitor('onReady', doThemes);
+            Ext.Perf.report();
+        }, 1000);
+    }
+});
+
+
+})();
+
+</script>
