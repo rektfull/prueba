@@ -1,5 +1,5 @@
 
-<div id="andres" style="display: block; min-height: 600px">
+<div id="andres" style="display: block; min-height: 700px">
     
 </div>
 
@@ -23,6 +23,7 @@ Ext.require([
     'Ext.data.*',
     'Ext.util.*',
 
+
     'Ext.perf.Monitor'
 ]);
 
@@ -45,109 +46,89 @@ function getFormWidgets () {
     return applySizing('formWidgets', {
         xtype: 'form',
         id   : 'form-widgets',
-        title: 'Form Widgets',
+        title: 'Nuevo Contacto',
         frame: true,
-
-        tools: [
-            {type:'close'},
-            {type:'minimize'},
-            {type:'maximize'},
-            {type:'restore'},
-            {type:'gear'},
-            {type:'pin'},
-            {type:'unpin'},
-            {type:'right'},
-            {type:'left'},
-            {type:'down'},
-            {type:'refresh'},
-            {type:'minus'},
-            {type:'plus'},
-            {type:'help'},
-            {type:'search'},
-            {type:'save'},
-            {type:'print'}
-        ],
-
-        bodyPadding: '10 20',
+        standardSubmit: true,
+  
+        bodyPadding: '20 100',
 
         defaults: {
-            anchor    : '98%',
+            anchor    : '100%',
             msgTarget : 'side',
-            allowBlank: false
         },
 
         items: [
             {
-                xtype: 'label',
-                text : ''
-            },
-            {
-                fieldLabel: 'Nombre',
+                fieldLabel: 'Nombre Completo',
                 xtype     : 'textfield',
-                name      : 'someField',
+                name      : 'nombre',
+                regex     :/^[a-zA-Z]+$/, //Validacion de caraceteres
+                regexText :'Debe escribir solo en letras y espacios',//Mensaje al campo
+                allowBlank: false
             },
             {
                 fieldLabel: 'NIT',
                 xtype     : 'textfield',
-                name      : 'somefield'
+                name      : 'nit'
             },
             {
                 fieldLabel: 'Direccion',
                 xtype     : 'textfield',
-                name      : 'somefield',
-                emptyText : 'Direccion'
+                name      : 'direccion',
             },
             {
                 fieldLabel: 'correo electronico',
-                name: 'time',
+                name: 'correo',
                 xtype: 'textfield'
             },
             {
                 fieldLabel: 'Telefono 1',
                 xtype     : 'textfield',
-                name      : 'somfield',
+                name      : 'telefono1',
             },
             {
                 fieldLabel: 'Telefono 2',
                 xtype     : 'textfield',
-                name      : 'somefield',
+                name      : 'telefono2',
             },
             {
                 fieldLabel: 'Fax',
                 xtype     : 'textfield',
-                name      : 'somofield',
+                name      : 'fax',
             },
             {
                 fieldLabel: 'Celular',
                 xtype     : 'textfield',
-                name      : 'somefield',
+                name      : 'celular',
             },
             {
                 fieldLabel: 'Servicios',
+                name: 'combo',
                 xtype: 'combo',
-                store: ['General', 'Ninguna']
+                store: ['General', 'Ninguna'],
             },
               {
                 fieldLabel: 'Vendedor',
+                name: 'combo2',
                 xtype: 'combo',
                 store: ['Ninguno',]
             },
               {
                 fieldLabel: 'Terminos de pago',
+                name: 'combo3',
                 xtype: 'combo',
                 store: ['Vencimiento Manual', 'De contado', '8 dias', '15 dias', '30 dias','60 dias']
             },
         
             {
-                fieldLabel: 'Cliente',
-                xtype: 'checkbox',
-                columns: [100,100],
-               
-            },
-            {
-                fieldLabel: 'Proveedor',
-                xtype: 'checkbox',
-                columns: [100,100],
+                
+                
+                xtype      : 'fieldset',
+                name:  'checkbox',
+                items: [
+                    { xtype: 'checkbox', boxLabel: 'Cliente' },
+                    { xtype: 'checkbox', boxLabel: 'Proveedor' }
+                ]
             },
             
             {
@@ -159,37 +140,36 @@ function getFormWidgets () {
             },
             {
                 fieldLabel: 'Incluir estado de cuenta',
+                name: 'checkbox3',
                 xtype: 'checkbox',
                 columns: [100,100],
             },
            
             
         ],
-
-        buttons: [
-            {
-                text   :'Toggle Enabled',
+          buttons: [{
+                text: 'Submit',
                 handler: function() {
-                    this.up('form').items.each(function(item) {
-                        item.setDisabled(!item.disabled);
-                    });
+                    var form = this.up('form').getForm();
+                    if (form.isValid()) {
+                        form.submit({
+                            url: "<?php echo $this->url(array('controller' => 'client', 'action' => 'save')) ?>", //this is the url where the form gets submitted
+                            success: function(form, action) {
+                               Ext.Msg.alert('Success', action.result.msg);
+                            },
+                            failure: function(form, action) {
+                                Ext.Msg.alert('Failed', action.result.msg);
+                            }
+                        });
+                    }
                 }
-            },
-            {
-                text   : 'Reset Form',
-                handler: function() {
-                    Ext.getCmp('form-widgets').getForm().reset();
-                }
-            },
-            {
-                text   : 'Validate',
-                handler: function() {
-                    Ext.getCmp('form-widgets').getForm().isValid();
-                }
-            }
-        ]
+            }],
+        
+            
+    
     });
 }//Final del form *//
+
 
 
 var sizing = {
