@@ -48,7 +48,7 @@ class ClientController extends Zend_Controller_Action{
             if (isset($_POST["nit"])) {
                 $fields["identification"] = urlencode($_POST["nit"]);  
             }
-            /*if (isset($_POST["direccion"])) {
+            if (isset($_POST["direccion"])) {
                 $fields["address"] = $_POST["direccion"];  
             }
             if (isset($_POST["correo"])) {
@@ -65,7 +65,7 @@ class ClientController extends Zend_Controller_Action{
             }
             if (isset($_POST["celular"])) {
                 $fields["mobile"] = $_POST["celular"];  
-            }
+            }/*
             if (isset($_POST["combo"])) {
                 $fields["priceList"] = $_POST["combo"];  
             }
@@ -74,23 +74,25 @@ class ClientController extends Zend_Controller_Action{
             }
              if (isset($_POST["combo3"])) {
                 $fields["term"] = $_POST["combo3"];  
-            }
+            }*/
             if (isset($_POST["checkbox"])) {
                 $fields["type"] = $_POST["checkbox"];  
             }
             if (isset($_POST["message"])) {
                 $fields["observations"] = $_POST["message"];  
-            }*/
+            }
 
-            $url = 'https://app.alegra.com/api/v1/contacts';
+            //open conection
+            $ch = curl_init();
 
-
-            $ch = curl_init('https://app.alegra.com/api/v1/contacts');
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            //set the url, number of POST vars, POST data
+            curl_setopt($ch,CURLOPT_URL,"https://app.alegra.com/api/v1/contacts");
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/xml','Accept: application/json' )); 
             curl_setopt($ch, CURLOPT_USERPWD, $token);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, "name=holaaaa&identification=3567");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
 
             // execute!
             $response = curl_exec($ch);
@@ -98,8 +100,14 @@ class ClientController extends Zend_Controller_Action{
             // close the connection, release resources used
             curl_close($ch);
 
-            // do anything you want with your response
-            var_dump($response);
+
+            if($httpcode = 200){
+
+                 return              $this->_redirect('client/listclient');
+
+
+
+            }
 
 
         }//ActionSAVE

@@ -62,7 +62,6 @@ function getFormWidgets () {
                 fieldLabel: 'Nombre Completo',
                 xtype     : 'textfield',
                 name      : 'nombre',
-                regex     :/^[a-zA-Z]+$/, //Validacion de caraceteres
                 regexText :'Debe escribir solo en letras y espacios',//Mensaje al campo
                 allowBlank: false
             },
@@ -138,12 +137,7 @@ function getFormWidgets () {
                 cls       : 'x-form-valid',
                 value     : ''
             },
-            {
-                fieldLabel: 'Incluir estado de cuenta',
-                name: 'checkbox3',
-                xtype: 'checkbox',
-                columns: [100,100],
-            },
+            
            
             
         ],
